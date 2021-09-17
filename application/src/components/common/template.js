@@ -4,7 +4,7 @@ import './template.css';
 
 const Template = props => {
     return (
-        <div className="bg-layer">
+        <div className="bg-layer" onClick={props.closeCallback}>
             <div className="fg-layer">
                 <label className="logo">Bruce's Diner</label>
                 <Nav />
