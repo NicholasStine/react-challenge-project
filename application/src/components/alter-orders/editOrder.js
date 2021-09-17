@@ -33,7 +33,8 @@ class EditOrder extends Component {
 
     onFormChange(name, value) {
         console.log(`NEW STATE: {${name}: ${value} }}`)
-        this.setState({ ...this.state, [name]: value })
+        let correctedValue = name == "ordered_by" ? value == "" ? this.state.prev_ordered_by : value : value
+        this.setState({ ...this.state, [name]: correctedValue })
     }
 
     onEditSubmit(e) {
@@ -43,7 +44,7 @@ class EditOrder extends Component {
             method: 'POST',
             body: JSON.stringify({
                 id: this.props.order._id,
-                ordered_by: this.props.ordered_by,
+                ordered_by: this.state.ordered_by,
                 order_item: this.state.order_item,
                 quantity: this.state.quantity
             }),
@@ -88,7 +89,8 @@ class EditOrder extends Component {
                     </div>
                 </div>
                 <div className="alter-group">
-                    <input onChange={(e) => this.onFormChange("ordered_by", e.target.value)} />
+                    <strong>Update Email</strong>
+                    <input placeholder={this.state.prev_ordered_by} onChange={(e) => this.onFormChange("ordered_by", e.target.value)} />
                 </div>
                 <div className="mt-3">
                     <button
