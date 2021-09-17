@@ -46,6 +46,10 @@ class OrderForm extends Component {
         .catch(error => console.error(error));
     }
 
+    componentDidMount() {
+        this.props.auth.token == null && this.props.history.push('/login');
+    }
+
     render() {
         return (
             <Template>

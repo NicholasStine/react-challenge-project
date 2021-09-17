@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import { Template } from '../../components';
 import { SERVER_IP } from '../../private';
+import { connect } from 'react-redux';
 import './viewOrders.css';
+
+const mapStateToDispatch = state => ({
+    auth: state.auth
+})
 
 class ViewOrders extends Component {
     state = {
@@ -9,6 +14,10 @@ class ViewOrders extends Component {
     }
 
     componentDidMount() {
+        if (this.props.auth.token == null) {
+            this.props.history.push('/login');
+            return;
+        }
         fetch(`${SERVER_IP}/api/current-orders`)
             .then(response => response.json())
             .then(response => {
@@ -49,4 +58,4 @@ class ViewOrders extends Component {
     }
 }
 
-export default ViewOrders;
+export default connect(mapStateToDispatch, null)(ViewOrders);
